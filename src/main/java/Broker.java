@@ -16,6 +16,11 @@ public class Broker {
     private Connection connection;
     private Channel channel;
 
+    public static void main(String[] args) {
+        Broker broker = new Broker();
+        broker.startBroker();
+    }
+
     public void startBroker() {
         try {
             // Configurar a conexão com o RabbitMQ
