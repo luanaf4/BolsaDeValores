@@ -1,3 +1,16 @@
-StockExchange.class
+Transacoes$TransacaoRecord.class
+MOM.class
+BolsaDeValores.class
+MOM$TransacaoCallback.class
+MOM$VendaCallback.class
+Transacoes.class
+MOM$CompraCallback.class
+OrderBook$CompraOrder.class
+MOM$1.class
+MOM$2.class
+OrderBook$VendaOrder.class
+AssetList.class
 Main.class
+MOM$3.class
+OrderBook.class
 Broker.class
