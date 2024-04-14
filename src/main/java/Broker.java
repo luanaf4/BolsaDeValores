@@ -13,18 +13,22 @@ public class Broker {
     private static final String COMPRA_ROUTING_KEY = "compra";
     private static final String VENDA_ROUTING_KEY = "venda";
 
-    public static void main(String[] args) {
+    private Connection connection;
+    private Channel channel;
+
+    public void startBroker() {
         try {
             // Configurar a conexão com o RabbitMQ
             ConnectionFactory factory = new ConnectionFactory();
             factory.setHost("gull.rmq.cloudamqp.com");
-            factory.setPort(1883);
+            factory.setPort(5672);
             factory.setUsername("izamycsm");
             factory.setPassword("X6H60yjeOeUKWBzJOxHzVYLGeBjPx0TO");
+            factory.setVirtualHost("izamycsm");
 
             // Criar a conexão
-            Connection connection = factory.newConnection();
-            Channel channel = connection.createChannel();
+            connection = factory.newConnection();
+            channel = connection.createChannel();
 
             // Declarar a fila do Broker
             channel.queueDeclare(BROKER_QUEUE_NAME, false, false, false, null);
@@ -41,24 +45,32 @@ public class Broker {
 
                 // Processar a mensagem e enviar para a Bolsa de Valores
                 if (message.startsWith("compra")) {
-                    sendOrderToStockExchange(channel, COMPRA_ROUTING_KEY, message);
+                    sendOrderToStockExchange(COMPRA_ROUTING_KEY, message);
                 } else if (message.startsWith("venda")) {
-                    sendOrderToStockExchange(channel, VENDA_ROUTING_KEY, message);
+                    sendOrderToStockExchange(VENDA_ROUTING_KEY, message);
                 }
             };
             channel.basicConsume(BROKER_QUEUE_NAME, true, deliverCallback, consumerTag -> {
             });
-
         } catch (IOException | TimeoutException e) {
             e.printStackTrace();
         }
     }
 
-    private static void sendOrderToStockExchange(Channel channel, String routingKey, String message) {
+    void sendOrderToStockExchange(String routingKey, String message) {
         try {
             channel.basicPublish(BOLSA_DE_VALORES_EXCHANGE_NAME, routingKey, null, message.getBytes(StandardCharsets.UTF_8));
             System.out.println("Mensagem enviada para a Bolsa de Valores: " + message);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stopBroker() {
+        try {
+            channel.close();
+            connection.close();
+        } catch (IOException | TimeoutException e) {
             e.printStackTrace();
         }
     }

@@ -23,14 +23,15 @@ public class StockExchange {
     }
 
 
-    private void run() {
+    public void run() {
         try {
             // Configurar a conexão com o RabbitMQ
             ConnectionFactory factory = new ConnectionFactory();
             factory.setHost("gull.rmq.cloudamqp.com");
-            factory.setPort(1883);
+            factory.setPort(5672);
             factory.setUsername("izamycsm");
             factory.setPassword("X6H60yjeOeUKWBzJOxHzVYLGeBjPx0TO");
+            factory.setVirtualHost("izamycsm");
 
             // Criar a conexão
             Connection connection = factory.newConnection();
@@ -73,7 +74,7 @@ public class StockExchange {
         }
     }
 
-    private void processOrder(Channel channel, String message) {
+     void processOrder(Channel channel, String message) {
         if (message.startsWith("compra")) {
             processBuyOrder(channel, message);
         } else if (message.startsWith("venda")) {
@@ -183,7 +184,7 @@ public class StockExchange {
         }
     }
 
-    private void publishOrderBookUpdate(Channel channel, String broker, double price, int quantity, boolean isBuy) {
+     void publishOrderBookUpdate(Channel channel, String broker, double price, int quantity, boolean isBuy) {
         String routingKey = (isBuy ? "compra" : "venda") + "." + broker;
         String message = String.format("%s<quant:%d,val:%.2f,corretora:%s>", isBuy ? "compra" : "venda", quantity, price, broker);
         try {
@@ -194,7 +195,7 @@ public class StockExchange {
         }
     }
 
-    private void publishTradeNotification(Channel channel, String broker, int quantity, double price, boolean isBuy) {
+     void publishTradeNotification(Channel channel, String broker, int quantity, double price, boolean isBuy) {
         String routingKey = (isBuy ? "compra" : "venda") + "." + broker;
         String message = String.format("%s<quant:%d,val:%.2f,corretora:%s>", isBuy ? "compra" : "venda", quantity, price, broker);
         try {
@@ -204,5 +205,6 @@ public class StockExchange {
             e.printStackTrace();
         }
     }
+
 }
 
