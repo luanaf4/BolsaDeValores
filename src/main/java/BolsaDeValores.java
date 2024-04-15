@@ -31,27 +31,28 @@ public class BolsaDeValores {
     private Transacoes transacoes;
     private boolean connectionSuccessful;
 
-    public BolsaDeValores(String rabbitMQServerAddress) {
-        try{
-        mom = new MOM( "gull.rmq.cloudamqp.com", "izamycsm", "X6H60yjeOeUKWBzJOxHzVYLGeBjPx0TO" );
-        orderBooks = new HashMap<>();
-        assetList = new AssetList();
-        transacoes = new Transacoes();
+    public BolsaDeValores(String rabbitMQServerAddress, String username, String password) {
+        try {
+            mom = new MOM(rabbitMQServerAddress, username, password);
+            orderBooks = new HashMap<>();
+            assetList = new AssetList();
+            transacoes = new Transacoes();
 
-        // Carrega a lista de ativos da Bovespa
-        loadAssets();
+            // Carrega a lista de ativos da Bovespa
+            loadAssets();
 
-        // Subscreve os tópicos de compra e venda
-        mom.subscribeCompra(this::handleCompra);
-        mom.subscribeVenda(this::handleVenda);
+            // Subscreve os tópicos de compra e venda
+            mom.subscribeCompra(this::handleCompra);
+            mom.subscribeVenda(this::handleVenda);
 
-        connectionSuccessful = true;
-    } catch (Exception e) {
-        connectionSuccessful = false;
-        e.printStackTrace();
+            connectionSuccessful = true;
+        } catch (Exception e) {
+            connectionSuccessful = false;
+            e.printStackTrace();
+        }
     }
 
-    }
+
 
     public boolean isConnectionSuccessful() {
         return connectionSuccessful;
