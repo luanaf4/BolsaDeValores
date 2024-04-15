@@ -8,10 +8,7 @@ import java.util.concurrent.TimeoutException;
 
 public class BolsaDeValores {
     private static final String BOLSA_EXCHANGE_NAME = "BOLSA_DE_VALORES";
-    private static final String COMPRA_ROUTING_KEY = "compra";
-    private static final String VENDA_ROUTING_KEY = "venda";
     private static final String TRANSACAO_ROUTING_KEY = "transacao.{ativo}";
-    private static final String ATIVOS_BOVESPA_FILE = "src/main/java/ativos_bovespa.csv";
     private Channel channel;
 
     private Connection connection;
@@ -32,9 +29,10 @@ public class BolsaDeValores {
     private Map<String, OrderBook> orderBooks;
     private AssetList assetList;
     private Transacoes transacoes;
-
+    private boolean connectionSuccessful;
 
     public BolsaDeValores(String rabbitMQServerAddress) {
+        try{
         mom = new MOM( "gull.rmq.cloudamqp.com", "izamycsm", "X6H60yjeOeUKWBzJOxHzVYLGeBjPx0TO" );
         orderBooks = new HashMap<>();
         assetList = new AssetList();
@@ -46,6 +44,17 @@ public class BolsaDeValores {
         // Subscreve os tópicos de compra e venda
         mom.subscribeCompra(this::handleCompra);
         mom.subscribeVenda(this::handleVenda);
+
+        connectionSuccessful = true;
+    } catch (Exception e) {
+        connectionSuccessful = false;
+        e.printStackTrace();
+    }
+
+    }
+
+    public boolean isConnectionSuccessful() {
+        return connectionSuccessful;
     }
 
     private void loadAssets() {

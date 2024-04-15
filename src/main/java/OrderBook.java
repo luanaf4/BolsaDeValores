@@ -114,6 +114,11 @@ public class OrderBook {
                 }
 
                 Transacoes.registerTransacao(asset, transacaoQty, transacaoPrice, brokerCode);
+
+                // Atualiza a quantidade do ativo na lista AssetList
+                AssetList.AssetInfo assetInfo = AssetList.getAssets().get(asset);
+                assetInfo.setQuantity(assetInfo.getQuantity() - transacaoQty);
+
                 return true;
             }
         }
