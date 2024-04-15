@@ -15,7 +15,7 @@ public class Transacoes {
     }
 
 
-    public TransacaoRecord getTransacoesForAsset(String asset) {
+    public static TransacaoRecord getTransacoesForAsset(String asset) {
         return transacoes.get(asset);
     }
 
@@ -47,6 +47,14 @@ public class Transacoes {
         public Map<String, Integer> getBrokerTransacoes() {
             return brokerTransacoes;
         }
+    }
+
+    public static double getAveragePrice(String asset) {
+        TransacaoRecord record = transacoes.get(asset);
+        if (record != null && record.getTotalQuantity() > 0) {
+            return record.getTotalValue() / record.getTotalQuantity();
+        }
+        return 0.0;
     }
 
     public static void imprimirTransacoes() {

@@ -94,12 +94,18 @@ public class BolsaDeValores {
         String asset = parts[0].split(":")[1];
         int quantity = Integer.parseInt(parts[1].split(":")[1]);
         double price = Double.parseDouble(parts[2].split(":")[1]);
-        String brokerCode = parts[3].split(":")[1].replace(">", "");
+        String brokerCode = parts[3].split(":")[1];
+        String responseQueue = parts[4].split(":")[1].replace(">", "");
 
         if (assetList.getAssets().containsKey(asset)) {
             OrderBook orderBook = getOrderBook(asset);
-            orderBook.addVendaOrder(quantity, price, brokerCode);
-            processarTransacoes(asset, orderBook);
+            boolean vendaAprovada = orderBook.processVendaOrder(asset, quantity, price, brokerCode);
+            String responseMessage = vendaAprovada ? "Venda aprovada" : "Venda rejeitada";
+            try {
+                mom.channel.basicPublish("", responseQueue, null, responseMessage.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             System.out.println("Ativo não encontrado na lista de ativos disponíveis.");
         }

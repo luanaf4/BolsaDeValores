@@ -125,6 +125,24 @@ public class OrderBook {
         return false;
     }
 
+    public boolean processVendaOrder(String asset, int quantity, double price, String brokerCode) {
+        Transacoes.TransacaoRecord record = Transacoes.getTransacoesForAsset(asset);
+        if (record != null) {
+            double averagePrice = Transacoes.getAveragePrice(asset);
+            if (quantity <= record.getTotalQuantity() && price <= averagePrice) {
+                double transacaoPrice = price;
+                Transacoes.registerTransacao(asset, quantity, transacaoPrice, brokerCode);
+
+                // Atualiza a quantidade do ativo na lista AssetList
+                AssetList.AssetInfo assetInfo = AssetList.getAssets().get(asset);
+                assetInfo.setQuantity(assetInfo.getQuantity() + quantity);
+
+                return true;
+            }
+        }
+        return false;
+    }
+
     static class CompraOrder {
         private int quantity;
         private double price;
