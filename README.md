@@ -19,14 +19,17 @@ Este projeto implementa um sistema de bolsa de valores utilizando RabbitMQ para 
 
 
 ## Instruções de execução
+
+Acesse /Users/dtidigital/IdeaProjects/BolsaDeValores/src/main/java/
+
 1. Execute a aplicação da bolsa de valores:
    
-Com o botâo direito, clique em BolsaDeValores.App e selecione a opção 'Run BolsaDeValores...main()'
+Com o botão direito, clique em BolsaDeValores.App e selecione a opção 'Run BolsaDeValores...main()'
 
 
 3. Execute a aplicação da corretora:
 
-Com o botâo direito, clique em Broker.Appp e selecione a opção 'Run BrokerApp.main()'
+Com o botão direito, clique em Broker.Appp e selecione a opção 'Run BrokerApp.main()'
 
 4. Na aplicação da corretora, você poderá enviar ordens de compra e venda de ativos.
 5. As ordens serão processadas pela bolsa de valores, e as transações serão registradas.
