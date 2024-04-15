@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48f70655-1d85-4ecc-a293-3e95e31b4be9" name="Changes" comment="connection successful to RabbitMQ">
+    <list default="true" id="48f70655-1d85-4ecc-a293-3e95e31b4be9" name="Changes" comment="connection successful to RabbitMQ (BOTH BrokerApp and BolsaDeValoresApp)">
       <change beforePath="$PROJECT_DIR$/src/main/java/BolsaDeValores.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BolsaDeValores.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Broker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Broker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MOM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MOM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/target/classes/target/classes/target/classes/target/classes/target/classes/target/classes/target/classes/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/target/classes/target/classes/target/classes/target/classes/target/classes/target/classes/target/classes/target/classes/.idea/workspace.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +191,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713139930370</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="connection successful to RabbitMQ (BOTH BrokerApp and BolsaDeValoresApp)">
+      <option name="closed" value="true" />
+      <created>1713142175689</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1713142175689</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -212,6 +223,7 @@
     <MESSAGE value="merge" />
     <MESSAGE value="add MOM" />
     <MESSAGE value="connection successful to RabbitMQ" />
-    <option name="LAST_COMMIT_MESSAGE" value="connection successful to RabbitMQ" />
+    <MESSAGE value="connection successful to RabbitMQ (BOTH BrokerApp and BolsaDeValoresApp)" />
+    <option name="LAST_COMMIT_MESSAGE" value="connection successful to RabbitMQ (BOTH BrokerApp and BolsaDeValoresApp)" />
   </component>
 </project>
