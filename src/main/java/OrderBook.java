@@ -1,8 +1,6 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OrderBook {
     private List<CompraOrder> compraOrders;
@@ -10,14 +8,6 @@ public class OrderBook {
     private int transacaoQuantity;
     private double transacaoPrice;
     private String transacaoBrokerCode;
-
-    public List<CompraOrder> getCompraOrders() {
-        return compraOrders;
-    }
-
-    public List<VendaOrder> getVendaOrders() {
-        return vendaOrders;
-    }
 
     public OrderBook() {
         compraOrders = new ArrayList<>();
@@ -35,61 +25,6 @@ public class OrderBook {
             double initialPrice = assetInfo.getPrice();
             vendaOrders.add(new VendaOrder(initialQuantity, initialPrice, "BROKER_CODE"));
         }
-    }
-
-    public void addCompraOrder(int quantity, double price, String brokerCode) {
-        CompraOrder order = new CompraOrder(quantity, price, brokerCode);
-        compraOrders.add(order);
-        compraOrders.sort(Comparator.comparingDouble(CompraOrder::getPrice).reversed());
-        checkTransacao();
-    }
-
-    public void addVendaOrder(int quantity, double price, String brokerCode) {
-        VendaOrder order = new VendaOrder(quantity, price, brokerCode);
-        vendaOrders.add(order);
-        vendaOrders.sort(Comparator.comparingDouble(VendaOrder::getPrice));
-        checkTransacao();
-    }
-
-    public int checkTransacao() {
-        while (!compraOrders.isEmpty() && !vendaOrders.isEmpty()) {
-            CompraOrder compraOrder = compraOrders.get(0);
-            VendaOrder vendaOrder = vendaOrders.get(0);
-
-            if (compraOrder.getPrice() >= vendaOrder.getPrice()) {
-                int transacaoQty = Math.min(compraOrder.getQuantity(), vendaOrder.getQuantity());
-                transacaoQuantity = transacaoQty;
-                transacaoPrice = (compraOrder.getPrice() + vendaOrder.getPrice()) / 2;
-                transacaoBrokerCode = compraOrder.getBrokerCode();
-
-                compraOrder.decreaseQuantity(transacaoQty);
-                vendaOrder.decreaseQuantity(transacaoQty);
-
-                if (compraOrder.getQuantity() == 0) {
-                    compraOrders.remove(0);
-                }
-                if (vendaOrder.getQuantity() == 0) {
-                    vendaOrders.remove(0);
-                }
-
-                return transacaoQty;
-            } else {
-                break;
-            }
-        }
-        return 0;
-    }
-
-    public int getTransacaoQuantity() {
-        return transacaoQuantity;
-    }
-
-    public double getTransacaoPrice() {
-        return transacaoPrice;
-    }
-
-    public String getTransacaoBrokerCode() {
-        return transacaoBrokerCode;
     }
 
     public boolean containsBrokerCode(String brokerCode) {

@@ -3,7 +3,6 @@ import com.rabbitmq.client.Delivery;
 import java.io.IOException;
 
 public class Broker {
-    private static final String BROKER_QUEUE_NAME = "BROKER";
 
     private String compraResponseQueueName;
     private String vendaResponseQueueName;

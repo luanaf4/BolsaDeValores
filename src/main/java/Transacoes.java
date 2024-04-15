@@ -43,10 +43,6 @@ public class Transacoes {
         public double getTotalValue() {
             return totalValue;
         }
-
-        public Map<String, Integer> getBrokerTransacoes() {
-            return brokerTransacoes;
-        }
     }
 
     public static double getAveragePrice(String asset) {

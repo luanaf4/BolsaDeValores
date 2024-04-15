@@ -16,6 +16,7 @@ public class MOM {
     public MOM(String rabbitMQServerAddress, String username, String password) {
         try {
             ConnectionFactory factory = new ConnectionFactory();
+            //SUBSTITUA PELOS DADOS DO SEU SERVIDOR RABBITMQ NA CLOUDAMQP
             factory.setHost("gull.rmq.cloudamqp.com");
             factory.setPort(5672);
             factory.setUsername("izamycsm");
@@ -113,16 +114,6 @@ public class MOM {
     public void publishVenda(String message) {
         try {
             channel.basicPublish(BOLSA_EXCHANGE_NAME, VENDA_ROUTING_KEY, null, message.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void publishTransacao(String ativo, int quantity, double price, String brokerCode) {
-        String message = String.format("<quant:%d,val:%.2f,corretora:%s>", quantity, price, brokerCode);
-        try {
-            channel.basicPublish(BOLSA_EXCHANGE_NAME, TRANSACAO_ROUTING_KEY.replace("{ativo}", ativo), null, message.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }

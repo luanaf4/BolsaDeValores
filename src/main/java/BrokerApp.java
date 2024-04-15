@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 public class BrokerApp {
-    private static final String RABBIT_MQ_SERVER_ADDRESS = "gull.rmq.cloudamqp.com";
-    private static final String RABBIT_MQ_USERNAME = "izamycsm";
-    private static final String RABBIT_MQ_PASSWORD = "X6H60yjeOeUKWBzJOxHzVYLGeBjPx0TO";
+    private static final String RABBIT_MQ_SERVER_ADDRESS = "INSIRA O ENDEREÇO DO SERVIDOR";
+    private static final String RABBIT_MQ_USERNAME = "INSIRA O USUARIO";
+    private static final String RABBIT_MQ_PASSWORD = "INSIRA A SENHA";
 
     public static void main(String[] args) {
         Broker broker = new Broker(RABBIT_MQ_SERVER_ADDRESS, RABBIT_MQ_USERNAME, RABBIT_MQ_PASSWORD);

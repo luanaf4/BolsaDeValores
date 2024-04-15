@@ -1,5 +1,4 @@
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,16 +9,6 @@ public class BolsaDeValores {
     private static final String BOLSA_EXCHANGE_NAME = "BOLSA_DE_VALORES";
     private static final String TRANSACAO_ROUTING_KEY = "transacao.{ativo}";
     private Channel channel;
-
-    private Connection connection;
-
-    public MOM getMOM() {
-        return mom;
-    }
-
-    public Map<String, OrderBook> getOrderBooks() {
-        return orderBooks;
-    }
 
     public AssetList getAssetList() {
         return assetList;
@@ -108,36 +97,6 @@ public class BolsaDeValores {
             }
         } else {
             System.out.println("Ativo não encontrado na lista de ativos disponíveis.");
-        }
-    }
-
-    public void publishTransacao(String ativo, int quantity, double price, String brokerCode) {
-        String message = String.format("<quant:%d,val:%.2f,corretora:%s>", quantity, price, brokerCode);
-        try {
-            channel.basicPublish(BOLSA_EXCHANGE_NAME, TRANSACAO_ROUTING_KEY.replace("{ativo}", ativo), null, message.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void processarTransacoes(String asset, OrderBook orderBook) {
-        int quantity = orderBook.checkTransacao();
-        while (quantity > 0) {
-            double price = orderBook.getTransacaoPrice();
-            String brokerCode = orderBook.getTransacaoBrokerCode();
-            mom.publishTransacao(asset, quantity, price, brokerCode);
-            Transacoes.registerTransacao(asset, quantity, price, brokerCode);
-            quantity = orderBook.checkTransacao();
-        }
-    }
-
-    private void checkTransacao(String asset, OrderBook orderBook) {
-        // Verifica se há uma transação
-        int quantity = orderBook.checkTransacao();
-        if (quantity > 0) {
-            double price = orderBook.getTransacaoPrice();
-            String brokerCode = orderBook.getTransacaoBrokerCode();
-            mom.publishTransacao(asset, quantity, price, brokerCode);
         }
     }
 
